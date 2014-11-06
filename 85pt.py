@@ -14,6 +14,9 @@ root = Tk()
 # we can access them later on
 drawpadwidth = 480
 drawpadheight = 320
+targetx1 = drawpadwidth
+targety1 = drawpadheight
+
 drawpad = Canvas(root, width=drawpadwidth, height=drawpadheight, background='white')
 oval = drawpad.create_oval(160,160,320,320, fill="red")
 
@@ -47,19 +50,30 @@ class MyApp:
                 # "global" makes sure that we can access our oval and our drawpad
                 # Add in boundary detection
 		global oval
+		global targetx1, targety1
 		global drawpad
 		global drawpadwidth
 		global drawpadheight
+		x1,y1,x2,y2 = drawpad.coords(oval)
 		drawpad.move(oval, -10, 0)
+		if x1 < 0:
+		    drawpad.move(oval, 10, 0)
+		        
+						    		    
 	
 	# Add the button2Click method
-	def button2Click(self, event):
-	    global oval
-	    global drawpad
-	    global drawpadwidth
-	    global drawpadheight
-	    drawpad.move(oval, 10, 0)
-	    	
+	def button2Click(self, event):   
+		global oval
+		global targetx1, targety1
+		global drawpad
+		global drawpadwidth
+		global drawpadheight
+		x1,y1,x2,y2 = drawpad.coords(oval)
+		drawpad.move(oval, 10, 0)
+		if x2 > 475:
+		    drawpad.move(oval, -10, 0)
+
+	   
 myapp = MyApp(root)
 
 root.mainloop()
